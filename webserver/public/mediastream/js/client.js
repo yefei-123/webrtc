@@ -15,7 +15,11 @@ if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
 else
 {
 	var constrants = {
-		video : true,
+		video : {
+			height:1080,
+			wight:1920,
+			frmate:30
+		},
 		audio : true
 	};
 	navigator.mediaDevices.getUserMedia(constrants).then(getMediaStream).catch(handleError);

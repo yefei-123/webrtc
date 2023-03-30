@@ -5,7 +5,7 @@ var audioOutput = document.querySelector('select#audioOutput');
 var videoSource = document.querySelector('select#videoSource');
 
 var videoplay = document.querySelector('video#player');
-
+var filtersSelect = document.querySelector('select#filter');
 function getMediaStream(stream)
 {
 	videoplay.srcObject  =  stream;
@@ -82,3 +82,6 @@ function  start()
 start();
 
 videoSource.onchange = start;
+filtersSelect.onchange = function () {
+	videoplay.className = filtersSelect.value;
+}

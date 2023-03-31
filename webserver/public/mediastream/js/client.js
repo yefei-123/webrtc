@@ -5,10 +5,30 @@ var audioOutput = document.querySelector('select#audioOutput');
 var videoSource = document.querySelector('select#videoSource');
 
 var videoplay = document.querySelector('video#player');
+var audioplay = document.querySelector('audio#audioplay');
+
 var filtersSelect = document.querySelector('select#filter');
+
+
+var snapshot = document.querySelector('button#snapshot');
+var picture = document.querySelector('canvas#picture');
+
+picture.width = 320;
+picture.height = 240;
+
+
+
+var divConstraints =  document.querySelector('div#constraints');
+
 function getMediaStream(stream)
 {
 	videoplay.srcObject  =  stream;
+	
+	var videoTrack = stream.getVideoTracks()[0];
+	var videoConstrants = videoTrack.getSettings();
+	divConstraints.textContent = JSON.stringify(videoConstrants, null, 2)
+	//audio.srcObject  =  stream;
+
 	return navigator.mediaDevices.enumerateDevices();
 }
 function getDeviceInforsucess(deviceInfos)
@@ -61,8 +81,9 @@ function  start()
 		var deviceId = videoSource.value;
 		var constrants = {
 			video :{
-				weight:1920,
-				height:1080,
+				weight:640,
+				height:480,
+				frameRate:15,
 				facingMode:'enviroment',
 				deviceId: deviceId ? deviceId : undefined
 				
@@ -85,3 +106,9 @@ videoSource.onchange = start;
 filtersSelect.onchange = function () {
 	videoplay.className = filtersSelect.value;
 }
+
+snapshot.onclick = function(){
+	picture.className = filtersSelect.value;
+	picture.getContext('2d').drawImage(videoplay, 0,0, picture.width, picture.height);
+}
+
